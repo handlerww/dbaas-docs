@@ -7,6 +7,26 @@ summary: Learn about the release notes of TiDB Cloud.
 
 This page lists the release notes of [TiDB Cloud](https://pingcap.com/products/tidbcloud).
 
+## December 30, 2020
+
+* Upgrade the default TiDB version to v4.0.9
+* Support upgrading and scaling in TiDB gracefully to achieve zero client failures
+* Recover cluster configuration after restoring a new cluster from backup
+
+## December 16, 2020
+
+* Adjust the minimum number of TiDB nodes to one for all cluster tiers
+* Prohibit executing system command on the SQL web shell
+* Enable redact-log for TiDB clusters by default
+
+## November 24, 2020
+
+* Allow the traffic filter IP list of a TiDB cluster's public endpoint to be empty to disable public access
+* Improve the delivery rate of invitation emails sent to customers with Outlook or Hotmail
+* Polish the error notification message for sign-up
+* New clusters will run on CentOS VM instead of Ubuntu
+* Fix the issue that the cluster does not show in the recycle bin when the corresponding backup still exists
+
 ## November 4, 2020
 
 * Implement the function of changing the organization name
