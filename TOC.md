@@ -33,6 +33,7 @@
   + Migrate Data into TiDB
     + [Export Data from MySQL Compatible Databases](migrate-data-into-tidb.md)
     + [Import Data to Your TiDB Cluster](migrate-data-into-tidb.md#step-2-import-data-to-your-tidb-cluster)
+    + [Migrate from Amazon Aurora MySQL in Bulk](migrate-from-aurora-bulk-import.md)
   + [Export Data from TiDB](export-data-from-tidb-cloud.md)
 + Manage User Access
   + [Sign in](manage-user-access.md)
