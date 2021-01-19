@@ -7,7 +7,7 @@ summary: Learn about TiDB Cloud documentation.
 
 # TiDB Cloud Documentation
 
-[TiDB Cloud](https://pingcap.com/products/tidbcloud) is a fully-managed Database-as-a-Service (DBaaS) that brings everything great about TiDB to your cloud, and lets you focus on your applications, not the complexities of your database. See the [TiDB versions supported in TiDB Cloud](supported-tidb-versions.md).
+[TiDB Cloud](https://pingcap.com/products/tidbcloud) is a fully-managed Database-as-a-Service (DBaaS) that brings everything great about TiDB to your cloud, and lets you focus on your applications, not the complexities of your database.
 
 <NavColumns>
 <NavColumn>

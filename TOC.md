@@ -52,7 +52,6 @@
 + Reference
   + [Select Your Cluster Tier](select-cluster-tier.md)
   + [Size Your TiDB Cluster](size-your-cluster.md)
-  + [Supported TiDB Versions](supported-tidb-versions.md)
   + [Service Level Agreement (SLA)](service-level-agreement.md)
   + [Terms of Service](terms-of-service.md)
   + [Privacy Policy](privacy-policy.md)

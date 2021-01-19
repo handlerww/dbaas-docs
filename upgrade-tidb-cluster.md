@@ -32,5 +32,3 @@ You can also submit an upgrade request in the work order system. We will contact
 5. Click **Submit**.
 
     TiDB Cloud technical support will confirm with you the time period for the upgrade. After you have confirmed the upgrade time, TiDB Cloud technical support will do the upgrade at the confirmed time period.
-
-For TiDB versions supported on TiDB Cloud, see [TiDB versions supported](supported-tidb-versions.md).

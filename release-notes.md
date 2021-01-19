@@ -1,6 +1,7 @@
 ---
 title: TiDB Cloud Release Notes
 summary: Learn about the release notes of TiDB Cloud.
+aliases: ['/tidbcloud/beta/supported-tidb-versions']
 ---
 
 # TiDB Cloud Release Notes
