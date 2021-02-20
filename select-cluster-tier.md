@@ -17,24 +17,24 @@ When creating a cluster, you need to select a cluster tier, which determines the
 
 ## AWS Tiers
 
-| Cluster tier | Node | CPU | Memory | Storage | Scenario |
-| :-- | :-- | :-- | :-- | :-- | :-- |
-| t1.tiny | TiKV | 2 vCPU | 2 G | 50 G EBS | Testing or development |
-| t1.tiny | TiDB | 2 vCPU | 2 G | / | Testing or development |
-| t1.standard | TiKV | 8 vCPU | 61 G | 1900 G NVMe | Production |
-| t1.standard | TiDB | 8 vCPU | 16 G | / | Production |
-| h1.standard | TiKV | 8 vCPU | 61 G | 1900 G NVMe | Production |
-| h1.standard | TiFlash | 8 vCPU | 61 G | 1900 G NVMe | Production |
-| h1.standard | TiDB | 8 vCPU | 16 G | / | Production |
+| Cluster tier | Node | CPU | Storage | Scenario |
+| :-- | :-- | :-- | :-- | :-- |
+| t1.tiny | TiKV | 2 vCPU | 50 G EBS | Testing or development |
+| t1.tiny | TiDB | 2 vCPU | / | Testing or development |
+| t1.standard | TiKV | 8 vCPU | 1900 G NVMe | Production |
+| t1.standard | TiDB | 8 vCPU | / | Production |
+| h1.standard | TiKV | 8 vCPU | 1900 G NVMe | Production |
+| h1.standard | TiFlash | 8 vCPU | 1900 G NVMe | Production |
+| h1.standard | TiDB | 8 vCPU | / | Production |
 
 ## GCP Tiers
 
-| Cluster tier | Node | CPU | Memory | Storage | Scenario |
-| :-- | :-- | :-- | :-- | :-- | :-- |
-| t1.tiny | TiKV | 1 vCPU | 3 G | 50 G | Testing or development|
-| t1.tiny | TiDB | 1 vCPU | 3 G | / | Testing or development|
-| t1.standard | TiKV | 8 vCPU | 52 G | 1875 G | Production |
-| t1.standard | TiDB | 8 vCPU | 30 G | / | Production |
-| h1.standard | TiKV | 8 vCPU | 52 G | 1875 G | Production |
-| h1.standard | TiFlash | 8 vCPU | 52 G | 1875 G | Production |
-| h1.standard | TiDB | 8 vCPU | 30 G | / | Production |
+| Cluster tier | Node | CPU | Storage | Scenario |
+| :-- | :-- | :-- | :-- | :-- |
+| t1.tiny | TiKV | 1 vCPU | 50 G | Testing or development|
+| t1.tiny | TiDB | 1 vCPU | / | Testing or development|
+| t1.standard | TiKV | 8 vCPU | 1875 G | Production |
+| t1.standard | TiDB | 8 vCPU | / | Production |
+| h1.standard | TiKV | 8 vCPU | 1875 G | Production |
+| h1.standard | TiFlash | 8 vCPU | 1875 G | Production |
+| h1.standard | TiDB | 8 vCPU | / | Production |
