@@ -1,11 +1,11 @@
 ---
-title: Migrate from Amazon Aurora MySQL using Dumpling and TiDB Lightning
-summary: This post introduces how to smoothly migrate data from Amazon Aurora MySQL to TiDB Cloud using Dumpling and TiDB Lightning.
+title: Migrate from Amazon Aurora MySQL to TiDB Cloud using Dumpling and TiDB Lightning
+summary: Learn how to migrate data from Amazon Aurora MySQL to TiDB CLoud using Dumpling and TiDB Lightning.
 ---
 
-[TiDB](https://docs.pingcap.com/tidb/stable/overview) is an open-source, distributed SQL database that supports [Hybrid Transactional/Analytical Processing](https://en.wikipedia.org/wiki/HTAP) (HTAP) workloads. TiDB Cloud is a fully-managed TiDB service delivered by [PingCAP](https://pingcap.com/) and is the easiest, most economical, and most resilient way to unlock the full power of TiDB in the cloud.
+# Migrate from Amazon Aurora MySQL to TiDB Cloud using Dumpling and TiDB Lightning
 
-You can smoothly migrate data to TiDB from any MySQL-compatible database. In this article, we’ll show you how to migrate your data from Amazon Aurora MySQL to [TiDB Cloud](https://pingcap.com/products/tidbcloud) using the open-source [Dumpling](https://docs.pingcap.com/tidb/stable/dumpling-overview) and [TiDB Lightning](https://docs.pingcap.com/tidb/stable/tidb-lightning-overview) tools. Dumpling _exports_ data from any MySQL-compatible database, and TiDB Lightning _imports_ it into TiDB.
+This document describes how to migrate your data from Amazon Aurora MySQL to [TiDB Cloud](https://pingcap.com/products/tidbcloud) using the open-source [Dumpling](https://docs.pingcap.com/tidb/stable/dumpling-overview) and [TiDB Lightning](https://docs.pingcap.com/tidb/stable/tidb-lightning-overview) tools. Dumpling _exports_ data from any MySQL-compatible database, and TiDB Lightning _imports_ it into TiDB. You can smoothly migrate data to TiDB from any MySQL-compatible database. Comparing to migrating data in bulk, this method will do less effect on online service.
 
 To migrate data, do the following: 
 
@@ -14,10 +14,6 @@ To migrate data, do the following:
 3. Create an Amazon's Elastic Compute Cloud (EC2) instance in which to run the migration tools.
 4. Use Dumpling to export the data from Amazon Aurora.
 5. Use TiDB to import the data to TiDB Cloud.
-
-> **Note:**
->
-> Because TiDB is highly compatible with MySQL databases, you can use any MySQL-native tool to perform the migration. For example, you can use the MySQL command-line client to import the output of `mysqldump` into TiDB; however, this approach performs considerably worse than the one we use in this article.
 
 ## Migration prerequisites
 
@@ -40,10 +36,6 @@ TiDB supports the following collations:
 * `utf8_general_bin`
 
 You can learn more about [Character Sets and Collations](https://docs.pingcap.com/tidb/stable/character-set-and-collation) in the TiDB documentation. To verify which character set you’re using, follow the steps in [Check the database character set settings](#check-the-database-collation-settings).
-
-### Stop writing data while exporting data to the Aurora database
-
-To keep data consistency, you must stop writing data to Aurora. This is because Amazon Aurora does not support `GLOBAL READ LOCK`. The easiest way is to avoid writing data while you are exporting it. For more details, see this [Amazon support article](https://aws.amazon.com/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/?nc1=h_ls). 
 
 ### TiDB Cloud cluster requirements
 
@@ -69,7 +61,7 @@ From the same VPC as your Amazon Aurora instance, launch the EC2 instance. You w
 
 ### Launch the EC2 instance
 
-In this section, we’ll prepare an EC2 instance to run the migration tools. You need to pay attention to two issues:
+In this section, you’ll prepare an EC2 instance to run the migration tools. You need to pay attention to two issues:
 
 * The instance should be in the same VPC as your Amazon Aurora service. This helps you smoothly connect to Amazon Aurora.
 * Ensure that the free disk space is larger than the size of your data. 
@@ -79,6 +71,7 @@ If you are familiar with these operations, you can skip this section, and contin
 Based on the [Amazon User Guide for Linux Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html), the process to launch an instance includes these steps:
 
 1. Open the [Amazon EC2 console](https://console.aws.amazon.com/ec2/). Choose **Launch Instances**.
+
 2. Choose an Amazon Machine Image (AMI). In this procedure, we use the AMI named Red Hat Enterprise Linux 8 (HVM), SSD Volume Type.
 
 3. On the **Choose an Instance Type** page, choose t2.large.
@@ -129,7 +122,7 @@ mysql>
 
 ### Check the database collation settings
 
-For your convenience, we need to verify the collation settings of the database. You can execute these commands in the MySQL terminal to your Amazon Aurora instance. 
+For your convenience, you need to verify the collation settings of the database. You can execute these commands in the MySQL terminal to your Amazon Aurora instance. 
 
 {{< copyable "sql" >}}
 
@@ -192,8 +185,7 @@ The TiDB Toolkit package includes Dumpling and TiDB Lighting.
       --filetype sql \
       --threads 8 \
       -o "$backup_dir" \
-      -f "*.*" -f '!/^(mysql|INFORMATION_SCHEMA|PERFORMANCE_SCHEMA|METRICS_SCHEMA|INSPECTION_SCHEMA)$/.*' \
-      --consistency="none" \
+      -f "*.*" \
       -F 256MiB
     ```
 
@@ -229,4 +221,4 @@ When the `tidb-lightning` process completes, The TiDB cluster on TiDB Cloud will
 
 ## Conclusion
 
-In this article, we showed how to do a full-data migration from Amazon Aurora to TiDB Cloud using Dumpling and TiDB Lightning. After the migration, the data and structure is the same on both TiDB Cloud and in the Aurora source cluster. Full-data migration is especially useful if you want to verify TiDB Cloud’s features using a copy of your Amazon Aurora data.
+In this article, you perform a full-data migration from Amazon Aurora to TiDB Cloud using Dumpling and TiDB Lightning. After the migration, the data and structure is the same on both TiDB Cloud and in the Aurora source cluster. Full-data migration is especially useful if you want to verify TiDB Cloud’s features using a copy of your Amazon Aurora data.
