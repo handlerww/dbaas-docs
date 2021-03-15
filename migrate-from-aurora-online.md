@@ -1,9 +1,9 @@
 ---
-title: Migration from Amazon Aurora to TiDB Cloud online with DM
+title: Migrate from Amazon Aurora to TiDB Cloud online with DM
 summary: Learn how to migrate data from Amazon Aurora to TiDB Cloud online with DM.
 ---
 
-# Migration from Amazon Aurora to TiDB Cloud online with DM
+# Migrate from Amazon Aurora to TiDB Cloud online with DM
 
 This guide provides step by step instructions to migrate data from Amazon Aurora to TiDB Cloud using DM.
 

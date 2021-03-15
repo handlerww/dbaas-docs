@@ -42,7 +42,7 @@ summary: Learn about TiDB Cloud documentation.
 <NavColumn>
 <ColumnTitle>Migrate Data</ColumnTitle>
 
-- [Migration from Amazon Aurora to TiDB Cloud online with DM](migrate-from-aurora-online.md)
+- [Migrate from Amazon Aurora to TiDB Cloud online with DM](migrate-from-aurora-online.md)
 - [Export Data from TiDB Cloud](export-data-from-tidb-cloud.md)
 
 </NavColumn>

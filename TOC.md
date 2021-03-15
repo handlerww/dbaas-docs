@@ -31,7 +31,7 @@
   + [Delete a TiDB Cluster](delete-tidb-cluster.md)
 + Migrate Data
   + Migrate Data into TiDB
-    + [Live Migration from Amazon Aurora to TiDB Cloud with DM](migrate-from-aurora-online.md)
+    + [Migrate from Amazon Aurora with DM](migrate-from-aurora-online.md)
     + [Migrate from Amazon Aurora MySQL in Bulk](migrate-from-aurora-bulk-import.md)
   + [Export Data from TiDB](export-data-from-tidb-cloud.md)
 + Manage User Access
