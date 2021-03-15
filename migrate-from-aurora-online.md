@@ -1,9 +1,9 @@
 ---
-title: Live Migration from Amazon Aurora to TiDB Cloud with DM
-summary: Learn how to performe live Migration from Amazon Aurora to TiDB Cloud with DM.
+title: Migration from Amazon Aurora to TiDB Cloud online with DM
+summary: Learn how to migrate data from Amazon Aurora to TiDB Cloud online with DM.
 ---
 
-# Live Migration from Amazon Aurora to TiDB Cloud with DM
+# Migration from Amazon Aurora to TiDB Cloud online with DM
 
 This guide provides step by step instructions to migrate data from Amazon Aurora to TiDB Cloud using DM.
 
@@ -13,19 +13,19 @@ Before you start the migration, you need to do some prechecks and some preparati
 
 ### Make a plan for DM cluster topology
 
-In this guide, we use 1 DM master and 1 DM worker deployed locally for functional verification.
+In this guide, you'll use 1 DM master and 1 DM worker deployed locally for functional verification.
 
-For production, you may need to deploy more nodes for DM masters and workers, see “[To migrate more than one database](#heading=h.9d641xsfzeor)” in troubleshooting.
+For production, you may need to deploy more nodes for DM masters and workers, see "[To migrate more than one database](#to-migrate-more-than-one-database)" in troubleshooting.
 
 ### Enable binary logging(binlog) for Amazon Aurora
 
-To migrate data from Amazon Aurora, you need to enable binary logging(binlog) for Amazon Aurora. If you are using the default parameter group, it’s immutable, you need to refer to the 
+To migrate data from Amazon Aurora, you need to enable binary logging(binlog) for Amazon Aurora. If you are using the default parameter group, it's immutable, you need to refer to the 
 
-[troubleshooting](#heading=h.dm6yvh8jzvp)to create a parameter group for configuring the database. If you have already created, follow these steps:
+[troubleshooting](#troubleshooting) to create a parameter group for configuring the database. If you have already created, follow these steps:
 
-1. Open the [Amazon Relational Database Service (Amazon RDS) console](https://console.aws.amazon.com/rds). In the Aurora dashboard, select the row about the source cluster, choose “Configuration”, see “DB cluster parameter group”, click this.
+1. Open the [Amazon Relational Database Service (Amazon RDS) console](https://console.aws.amazon.com/rds). In the Aurora dashboard, select the row about the source cluster, choose "Configuration", see "DB cluster parameter group", click it.
 
-2. Select the DB custom cluster parameter group, choose Parameter group actions, and select Edit. Change the value for binlog_format to ‘ROW’, Choose Save changes.
+2. Select the DB custom cluster parameter group, choose Parameter group actions, and select Edit. Change the value for binlog_format to 'ROW', Choose Save changes.
 
 3. After you perform the changes, you must reboot the write instances to make the changes take effect.
 
@@ -33,7 +33,7 @@ For more information on enabling binary logging on Aurora, you could refer to [h
 
 ### Check the connectivity to the instances on Amazon Aurora and TiDB Cloud
 
-You need to prepare an EC2 for the migration jobs. The EC2 should ensure the connectivity to Amazon Aurora and TiDB Cloud. If you are not familiar with how to prepare an EC2 for migration, you could refer to [troubleshooting](#heading=h.flk3touesofl).
+You need to prepare an EC2 for the migration jobs. The EC2 should ensure the connectivity to Amazon Aurora and TiDB Cloud. If you are not familiar with how to prepare an EC2 for migration, you could refer to [troubleshooting](#launch-an-ec2-for-migration).
 
 For Aurora, you will use the endpoint that Amazon Aurora provides. Get the access information from the Aurora MySQL Connectivity & security page.
 
@@ -51,7 +51,7 @@ Connect to Aurora MySQL, use the function below.
 sql > call mysql.rds_set_configuration('binlog retention hours', 168);
 ```
 
-If downstream doesn’t catch up with upstream, this binlog retention hours should be extended.
+If downstream doesn't catch up with upstream, this binlog retention hours should be extended.
 
 And downstream almost catches up with upstream, binlog retention hours could set to a lower value to reduce disk usage.
 
@@ -63,7 +63,7 @@ The size of the storage should be larger than the size of your source database. 
 
 Display the amount of used space on the volume
 
-### Check the database’s collation set settings
+### Check the database's collation set settings
 
 Currently, TiDB only supports the `utf8_general_ci` and `utf8mb4_general_ci` collation. For your convenience, we need to verify the collation settings of the database. You could execute these commands in the MySQL terminal to Aurora. 
 
@@ -110,7 +110,7 @@ sudo sed -i --follow-symlinks 's/^SELINUX=.*/SELINUX=disabled/g' /etc/sysconfig/
 
 ## Install TiUP for DM and deploy a DM cluster
 
-DM can be deployed in multiple ways. Currently, it is recommended to use TiUP to deploy a DM cluster. If you want to deploy DM using binary, you could refer to [troubleshooting](#heading=h.9d641xsfzeor) about this. 
+DM can be deployed in multiple ways. Currently, it is recommended to use TiUP to deploy a DM cluster. If you want to deploy DM using binary, you could refer to [troubleshooting](#deploy-using-binary) about this. 
 
 ```
 curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
@@ -120,7 +120,7 @@ tiup install dm
 
 To deploy the DM cluster, you could use a password or credential for authentication. In the preparation section, you have created a key pair for authentication. 
 
-For functional verification, we deploy one master and one worker, you could go to troubleshooting for [multi-source deployment](#heading=h.9d641xsfzeor). 
+For functional verification, you deploy one master and one worker, you could go to troubleshooting for [migrating more than one database](#to-migrate-more-than-one-database). 
 
 ```
 cat > topology.yaml<<EOF
@@ -140,9 +140,8 @@ worker_servers:
 EOF
  
 # To use password for ssh authentication, you could use `--user root -p`, for example:
-# tiup dm deploy dm-test nighlty ./topology.yaml --user root -p
-# use `tiup list dm-master` to get the latest release version, currently v2.0.0-rc.2. But here in doc we use nightly (going to GA soon) to enjoy a better experience.
-tiup dm deploy dm-test nightly ./topology.yaml --user ec2-user
+# tiup dm deploy dm-test v2.0.1 ./topology.yaml --user root -p
+tiup dm deploy dm-test v2.0.1 ./topology.yaml --user ec2-user
  
 # start the cluster
 tiup dm start dm-test
@@ -150,9 +149,9 @@ tiup dm start dm-test
 
 ## Configure the source and create migration jobs
 
-Create a data source for migration. Replace the source database information according to your instance on Aurora in the ‘from’ section. By default, the GTID is disabled on Aurora, you could ignore ‘enable-gtid’ when you are doing migration jobs. If you have enabled this, please set ‘enable-gtid’ to ‘true’.
+Create a data source for migration. Replace the source database information according to your instance on Aurora in the 'from' section. By default, the GTID is disabled on Aurora, you could ignore 'enable-gtid' when you are doing migration jobs. If you have enabled this, please set 'enable-gtid' to 'true'.
 
-For more information about GTID, you could refer to [https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/mysql-replication-gtid.html#mysql-replication-gtid.configuring-aurora](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/mysql-replication-gtid.html#mysql-replication-gtid.configuring-aurora).
+For more information about GTID, you could refer to [AWS Documentation | Configuring GTID-based replication for an Aurora MySQL cluster](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/mysql-replication-gtid.html#mysql-replication-gtid.configuring-aurora).
 
 ```
 cat > /tmp/source.yaml<<EOF
@@ -200,11 +199,8 @@ loaders:
   global:
     pool-size: 16
 
-mydumpers:
-  global:
-    extra-args: "--consistency none --statement-size 1000000 --filesize 16M"
 EOF
- 
+
 tiup dmctl --master-addr 127.0.0.1:8261 start-task /tmp/task.yaml 
 ```
 
@@ -246,39 +242,38 @@ You can query data in the downstream, modify data in Aurora, and validate the da
 
 ### Launch an EC2 for migration
 
-In this section, we’ll prepare an EC2 instance to run the migration tools. You need to pay attention to two issues:
+In this section, you'll prepare an EC2 instance to run the migration tools. You need to pay attention to two issues:
 
 * The instance should be in the same VPC as your Amazon Aurora service. This helps you smoothly connect to Amazon Aurora.  
 * Ensure that the free disk space is larger than the size of your data. 
 
-If you are familiar with these operations, you can skip this section, and continue with “[Check the connectivity with the Amazon Aurora database](https://docs.google.com/document/d/1jvSh3giWqlUfSX-B1qq3vt8Pa5Mh8qEPXVD5KAyJPtI/edit#heading=h.2kbabpqbto1s).” 
-
 Based on the [Amazon User Guide for Linux Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html), the process to launch an instance includes these steps:
 
-1. Open the Amazon EC2 console. Go to [https://console.aws.amazon.com/ec2/.](https://console.aws.amazon.com/ec2/)
-2. Choose an Amazon Machine Image (AMI). In this procedure, we use the AMI named **Amazon Linux 2 AMI (HVM), SSD Volume Type**.
+1. Open the Amazon EC2 console. Go to [https://console.aws.amazon.com/ec2/](https://console.aws.amazon.com/ec2/).
+
+2. Choose an Amazon Machine Image (AMI). In this procedure, use the AMI named **Amazon Linux 2 AMI (HVM), SSD Volume Type**.
 
 3. On the **Choose an Instance Type** page. Choose t2.large.
 
 4. Configure the instance details. Based on the network details of your Amazon Aurora service, choose the network and subnet.
 
-5. On Step 4, add storage, we need to set the size of the volume. The size of the storage should be larger than the size of your source database. The Amazon Aurora dashboard displays the amount of used space on the volume. 
+5. On Step 4, add storage, you need to set the size of the volume. The size of the storage should be larger than the size of your source database. The Amazon Aurora dashboard displays the amount of used space on the volume. 
 
     Display the amount of used space on the volume
 
     Based on this information, specify the total size of your storage. If you do not have enough free space, the data export may fail.
 
-6. Click review and launch, create a new key pair, save the key pair generated by AWS or use the existing key pair, and click ‘**Launch Instances**’.
+6. Click review and launch, create a new key pair, save the key pair generated by AWS or use the existing key pair, and click '**Launch Instances**'.
 
 For more details on how to launch an EC2 instance, see [AWS EC2 Get Started Guide](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html).
 
 ### To migrate more than one database
 
-From the architecture of DM, we could see that DM-worker is registered as a following node of the Aurora instance. It means if you have more than one Aurora instance to migrate, you need to keep that DM-workers are more than or equal to the source instances.
+From the architecture of DM, you could see that DM-worker is registered as a following node of the Aurora instance. It means if you have more than one Aurora instance to migrate, you need to keep that DM-workers are more than or equal to the source instances.
 
 Sometimes you have more than one database to migrate, you need to configure the deployment configuration and the source migration. Here are some configuration files for you.
 
-To deploy the cluster, you could set more than one master and worker node like this. Meanwhile, some monitoring servers are usually needed but not necessary.
+To deploy the cluster, set more than one master and worker node like this. Meanwhile, some monitoring servers are usually needed but not necessary.
 
 In the section **Prepare a key pair for deployment**, you have generated a key pair for authentication. To deploy on multiple nodes, you need to copy the public key to every node listed in the topology configuration.
 
@@ -294,7 +289,7 @@ Append the content in the public key to other nodes.
 vi ~/.ssh/authorized_keys
 ```
 
-When we finished the changes, we could deploy with TiUP.
+When you finished the changes, deploy with TiUP.
 
 ```
 cat > topology.yaml<<EOF
@@ -327,13 +322,13 @@ alertmanager_servers:
 EOF
  
 # You could use `--user root -p` for ssh authentication with password.
-tiup dm deploy dm-test nightly ./topology.yaml --user ec2-user -i /home/ec2-user/.ssh/tiup_private
+tiup dm deploy dm-test v2.0.1 ./topology.yaml --user ec2-user -i /home/ec2-user/.ssh/tiup_private
 
 # start the cluster
 tiup dm start dm-test
 ```
 
-To configure the source, using ‘tiup dmctl’ to connect to one of the DM masters. You could deploy more than one source like this.
+To configure the source, using 'tiup dmctl' to connect to one of the DM masters. You could deploy more than one source like this.
 
 ```
 # Aurora-1
@@ -414,9 +409,9 @@ Because the default parameter group is immutable, you need to modify the paramet
 
 The default parameter group is immutable. Therefore, you need to create a parameter group.
 
-1. In the navigation pane, choose Parameter groups. Click ‘Create parameter group’
+1. In the navigation pane, choose Parameter groups. Click 'Create parameter group'
 
-2. Choose type ‘DB Cluster Parameter Group’, click ‘Create’ button.
+2. Choose type 'DB Cluster Parameter Group', click 'Create' button.
 
 3. Open the Amazon RDS console. In the navigation pane, under Clusters, choose Modify.
 
@@ -426,12 +421,12 @@ Once the cluster parameter group is configured, you could modify the binlog feat
 
 ### Deploy using binary
 
-Sometimes you may feel more familiar with the binary for deployment. The difference between deploying with TiUP and binary deployment is mainly on the deployment stage. Another difference is you need to use dmctl directly rather than ‘tiup dmctl’ to operate the DM cluster.   
+Sometimes you may feel more familiar with the binary for deployment. The difference between deploying with TiUP and binary deployment is mainly on the deployment stage. Another difference is you need to use dmctl directly rather than 'tiup dmctl' to operate the DM cluster.   
 
 Download the DM and deploy one dm-master and one dm-worker. 
 
 ```
-curl https://download.pingcap.org/dm-nightly-linux-amd64.tar.gz | tar -xzv --strip-components 1 
+curl https://download.pingcap.org/dm-v2.0.1-linux-amd64.tar.gz | tar -xzv --strip-components 1 
 
 cat > dm-master.toml<<EOF
 # DM-master1 Configuration.
@@ -496,9 +491,6 @@ loaders:
   global:
     pool-size: 16
 
-mydumpers:
-  global:
-    extra-args: "--consistency none --statement-size 1000000 --filesize 16M"
 EOF
 
 ./bin/dmctl -master-addr 127.0.0.1:8261 start-task task.yaml
