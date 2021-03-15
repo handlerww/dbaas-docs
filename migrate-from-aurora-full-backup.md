@@ -194,6 +194,7 @@ The TiDB Toolkit package includes Dumpling and TiDB Lighting.
       --threads 8 \
       -o "$backup_dir" \
       -f "*.*" \
+      --consistency="none" \
       -F 256MiB
     ```
 
