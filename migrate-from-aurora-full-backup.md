@@ -5,7 +5,11 @@ summary: Learn how to migrate data from Amazon Aurora MySQL to TiDB CLoud using 
 
 # Migrate from Amazon Aurora MySQL to TiDB Cloud using Dumpling and TiDB Lightning
 
-This document describes how to migrate your data from Amazon Aurora MySQL to [TiDB Cloud](https://pingcap.com/products/tidbcloud) using the open-source [Dumpling](https://docs.pingcap.com/tidb/stable/dumpling-overview) and [TiDB Lightning](https://docs.pingcap.com/tidb/stable/tidb-lightning-overview) tools. Dumpling exports data from any MySQL-compatible database, and TiDB Lightning imports it into TiDB. You can smoothly migrate data to TiDB from any MySQL-compatible database. Comparing to migrating data in bulk, this method will do less effect on online service.
+This document describes how to migrate your data from Amazon Aurora MySQL to [TiDB Cloud](https://pingcap.com/products/tidbcloud) using [Dumpling](https://docs.pingcap.com/tidb/stable/dumpling-overview) and [TiDB Lightning](https://docs.pingcap.com/tidb/stable/tidb-lightning-overview) tools. Dumpling exports data from any MySQL-compatible database, and TiDB Lightning imports it into TiDB. You can smoothly migrate data to TiDB from any MySQL-compatible database. 
+
+> **Note:**
+> 
+> Because you have to stop writing data while exporting data to the Aurora database to keep the consistency, the method in this article is usually used for importing data from an offline database. If you want to migrate data from an online database, you'd better go to refer the document [Migration from Amazon Aurora to TiDB Cloud online with DM](migrate-from-aurora-online.md) or [Migrate from Amazon Aurora MySQL to TiDB Cloud in Bulk](migrate-from-aurora-bulk-import.md).
 
 To migrate data, do the following: 
 
@@ -16,6 +20,10 @@ To migrate data, do the following:
 5. Use TiDB to import the data to TiDB Cloud.
 
 ## Migration prerequisites
+
+### Stop writing data while exporting data to the Aurora database
+
+To keep data consistency, you must stop writing data to Aurora. This is because Amazon Aurora does not support `GLOBAL READ LOCK`. The easiest way is to avoid writing data while you are exporting it. For more details, see this [Amazon support article](https://aws.amazon.com/premiumsupport/knowledge-center/mysqldump-error-rds-mysql-mariadb/?nc1=h_ls).
 
 ### Amazon Aurora MySQL database requirements
 
