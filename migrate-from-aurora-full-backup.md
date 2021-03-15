@@ -5,7 +5,7 @@ summary: Learn how to migrate data from Amazon Aurora MySQL to TiDB CLoud using 
 
 # Migrate from Amazon Aurora MySQL to TiDB Cloud using Dumpling and TiDB Lightning
 
-This document describes how to migrate your data from Amazon Aurora MySQL to [TiDB Cloud](https://pingcap.com/products/tidbcloud) using the open-source [Dumpling](https://docs.pingcap.com/tidb/stable/dumpling-overview) and [TiDB Lightning](https://docs.pingcap.com/tidb/stable/tidb-lightning-overview) tools. Dumpling _exports_ data from any MySQL-compatible database, and TiDB Lightning _imports_ it into TiDB. You can smoothly migrate data to TiDB from any MySQL-compatible database. Comparing to migrating data in bulk, this method will do less effect on online service.
+This document describes how to migrate your data from Amazon Aurora MySQL to [TiDB Cloud](https://pingcap.com/products/tidbcloud) using the open-source [Dumpling](https://docs.pingcap.com/tidb/stable/dumpling-overview) and [TiDB Lightning](https://docs.pingcap.com/tidb/stable/tidb-lightning-overview) tools. Dumpling exports data from any MySQL-compatible database, and TiDB Lightning imports it into TiDB. You can smoothly migrate data to TiDB from any MySQL-compatible database. Comparing to migrating data in bulk, this method will do less effect on online service.
 
 To migrate data, do the following: 
 

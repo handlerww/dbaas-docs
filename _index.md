@@ -42,8 +42,7 @@ summary: Learn about TiDB Cloud documentation.
 <NavColumn>
 <ColumnTitle>Migrate Data</ColumnTitle>
 
-- [Export from MySQL Compatible Databases](migrate-data-into-tidb.md)
-- [Import into Your TiDB Cloud Cluster](migrate-data-into-tidb.md#step-2-import-data-to-your-tidb-cluster)
+- [Migrate from Amazon Aurora MySQL to TiDB Cloud using Dumpling and TiDB Lightning](migrate-from-aurora-full-backup.md)
 - [Export Data from TiDB Cloud](export-data-from-tidb-cloud.md)
 
 </NavColumn>
