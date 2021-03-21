@@ -62,6 +62,7 @@ summary: Learn about TiDB Cloud documentation.
 <NavColumn>
 <ColumnTitle>Reference</ColumnTitle>
 
+- [Meet the requirements of bulk import](migrate-from-aurora-bulk-import-reference.md)
 - [Billing](tidb-cloud-billing.md)
 - [Cluster Tiers](select-cluster-tier.md)
 - [Service Level Agreement](service-level-agreement.md)

@@ -50,6 +50,7 @@
   + [Credits](tidb-cloud-billing.md#credits)
   + [Payment Method Setting](tidb-cloud-billing.md#payment-method-setting)
 + Reference
+  + [Meet the requirements of bulk import](migrate-from-aurora-bulk-import-reference.md)
   + [Select Your Cluster Tier](select-cluster-tier.md)
   + [Size Your TiDB Cluster](size-your-cluster.md)
   + [Service Level Agreement (SLA)](service-level-agreement.md)
