@@ -29,7 +29,8 @@
     + [Key Visualizer](tune-performance.md#key-visualizer)
   + [Upgrade a TiDB Cluster](upgrade-tidb-cluster.md)
   + [Delete a TiDB Cluster](delete-tidb-cluster.md)
-+ Migrate Data
++ Data Ingestion & Migration
+  + [Import Sample Data for Experience](import-sample-data-for-experience.md)
   + Migrate Data into TiDB
     + [Export Data from MySQL Compatible Databases](migrate-data-into-tidb.md)
     + [Import Data to Your TiDB Cluster](migrate-data-into-tidb.md#step-2-import-data-to-your-tidb-cluster)
