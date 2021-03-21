@@ -40,8 +40,9 @@ summary: Learn about TiDB Cloud documentation.
 </NavColumn>
 
 <NavColumn>
-<ColumnTitle>Migrate Data</ColumnTitle>
+<ColumnTitle>Data Ingestion & Migration</ColumnTitle>
 
+- [Import Sample Data for Experience](import-sample-data-for-experience.md)
 - [Export from MySQL Compatible Databases](migrate-data-into-tidb.md)
 - [Import into Your TiDB Cloud Cluster](migrate-data-into-tidb.md#step-2-import-data-to-your-tidb-cluster)
 - [Export Data from TiDB Cloud](export-data-from-tidb-cloud.md)
