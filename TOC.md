@@ -31,7 +31,7 @@
   + [Delete a TiDB Cluster](delete-tidb-cluster.md)
 + Migrate Data
   + Migrate Data into TiDB
-    + [Migrate from Amazon Aurora MySQL using Dumpling and TiDB Lightning](migrate-from-aurora-full-backup.md)
+    + [Migrate from MySQL Compatible Databases](migrate-data-into-tidb.md)
     + [Migrate from Amazon Aurora MySQL in Bulk](migrate-from-aurora-bulk-import.md)
   + [Export Data from TiDB](export-data-from-tidb-cloud.md)
 + Manage User Access

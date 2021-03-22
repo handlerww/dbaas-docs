@@ -42,7 +42,7 @@ summary: Learn about TiDB Cloud documentation.
 <NavColumn>
 <ColumnTitle>Migrate Data</ColumnTitle>
 
-- [Migrate from Amazon Aurora MySQL to TiDB Cloud using Dumpling and TiDB Lightning](migrate-from-aurora-full-backup.md)
+- [Migrate from MySQL Compatible Databases](migrate-data-into-tidb.md)
 - [Export Data from TiDB Cloud](export-data-from-tidb-cloud.md)
 
 </NavColumn>
