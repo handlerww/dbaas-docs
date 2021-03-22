@@ -1,5 +1,5 @@
 ---
-title: Migrate from Amazon Aurora MySQL to TiDB in Bulk Reference
+title: Migrate from Amazon Aurora MySQL to TiDB Cloud in Bulk Reference
 summary: Learn how to migrate data from Amazon Aurora MySQL to TiDB Cloud in bulk.
 ---
 
