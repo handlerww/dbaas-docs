@@ -44,6 +44,7 @@ summary: Learn about TiDB Cloud documentation.
 
 - [Export from MySQL Compatible Databases](migrate-data-into-tidb.md)
 - [Import into Your TiDB Cloud Cluster](migrate-data-into-tidb.md#step-2-import-data-to-your-tidb-cluster)
+- [Migrate from Amazon Aurora MySQL in Bulk](migrate-from-aurora-bulk-import.md)
 - [Export Data from TiDB Cloud](export-data-from-tidb-cloud.md)
 
 </NavColumn>
@@ -62,7 +63,6 @@ summary: Learn about TiDB Cloud documentation.
 <NavColumn>
 <ColumnTitle>Reference</ColumnTitle>
 
-- [Meet the requirements of bulk import](migrate-from-aurora-bulk-import-reference.md)
 - [Billing](tidb-cloud-billing.md)
 - [Cluster Tiers](select-cluster-tier.md)
 - [Service Level Agreement](service-level-agreement.md)
